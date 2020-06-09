@@ -13,7 +13,7 @@ DEPS = $(OBJ:.o=.d)
 
 # All the external objects that the current submodule depends on
 # Those objects have to be up to date
-tempo1 = $(wildcard ../SM-Numerical_integration/*.a)
+tempo1 = $(wildcard ../Numerical_integration/*.a)
 EXTERNAL_OBJ = $(tempo1)
 
 # flags
@@ -24,11 +24,9 @@ MATHFLAGS = -lm
 
 # Python directories
 PY = $(OS:Windows_NT=/c/Anaconda2/)python
-ifeq ($(USERNAME),simon)
-    PY = $(OS:Windows_NT=/cygdrive/c/Anaconda2/)python
-endif
+
 ifeq ($(USERNAME),Sous-sol)
-    PY = $(OS:Windows_NT=/cygdrive/c/ProgramData/Anaconda2/)python
+    PY = $(OS:Windows_NT=/c/ProgramData/Anaconda2/)python
 endif
 
 # includes
@@ -38,28 +36,21 @@ ifneq ($(OS),Windows_NT)
 endif
 
 # libraries
-LDLIBS = $(OS:Windows_NT=-L /c/Anaconda2/libs/ -l python27) $(PYINCL)
-ifeq ($(USERNAME),simon)
-    LDLIBS = $(OS:Windows_NT=-L /cygdrive/c/Anaconda2/libs/ -l python27) $(PYINCL)
-endif
+PYLIBS = $(OS:Windows_NT=-L /c/Anaconda2/ -l python27)
+
 ifeq ($(USERNAME),Sous-sol)
-    LDLIBS = $(OS:Windows_NT=-L /cygdrive/c/ProgramData/Anaconda2/libs/ -l python27) $(PYINCL) 
+    PYLIBS = $(OS:Windows_NT=-L /c/ProgramData/Anaconda2/ -l python27)
 endif
 
 $(TARGET_PYLIB): $(OBJ)
 	@ echo " "
 	@ echo "---------Compile library $(TARGET_PYLIB)---------"
-	$(CC) $(SHRFLAGS) -o $(TARGET_PYLIB) $(OBJ) $(EXTERNAL_OBJ) $(CFLAGS) $(MATHFLAGS) $(OMPFLAGS) $(LDLIBS)
-
-# $(TARGET_STATIC) : $(OBJ)
-# @ echo " "
-# @ echo "---------Compiling static library $(TARGET_STATIC)---------"
-# ar cr $(TARGET_STATIC) $(OBJ) $(EXTERNAL_OBJ) 
+	$(CC) $(SHRFLAGS) -o $(TARGET_PYLIB) $(OBJ) $(EXTERNAL_OBJ) $(CFLAGS) $(MATHFLAGS) $(PYLIBS)
 
 %.o : %.cpp
 	@ echo " "
 	@ echo "---------Compile object $@ from $<--------"
-	$(CC) $(SHRFLAGS) -c -Wall -o $@ $< $(CFLAGS) $(MATHFLAGS) $(OMPFLAGS) $(LDLIBS)
+	$(CC) $(SHRFLAGS) -c -Wall -o $@ $< $(CFLAGS) $(OMPFLAGS) $(PYINCL)
 
 -include $(DEPS)
 

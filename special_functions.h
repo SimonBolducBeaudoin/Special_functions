@@ -3,7 +3,7 @@
 #define _USE_MATH_DEFINES
 #define PI M_PI
 #include <cmath>
-#include "../SM-Numerical_integration/Numeric_Integrals.h"
+#include "../Numerical_integration/Numeric_Integrals.h"
 typedef unsigned int uint;
 
 /* Fresnel integrals */
