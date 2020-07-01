@@ -1,4 +1,4 @@
-#include "special_functions_py.h"
+#include <special_functions_py.h>
 
 void init_special_functions(py::module &m)
 {

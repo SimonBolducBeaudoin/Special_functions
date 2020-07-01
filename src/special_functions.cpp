@@ -1,5 +1,4 @@
-#include "special_functions.h"
-
+#include <special_functions.h>
 
 /* Fresnel integrals */
 inline double C( double x )
