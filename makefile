@@ -1,7 +1,7 @@
 NAME = special_functions
 PYLIB_EXT = $(if $(filter $(OS),Windows_NT),.pyd,.so)
 TARGET_STATIC = lib$(NAME).a
-TARGET_PYLIB = ../Python/$(NAME)$(PYLIB_EXT)
+TARGET_PYLIB = ../../Python_2_7/lib/$(NAME)$(PYLIB_EXT)
 
 SPECIAL_FUNC = ../Special_functions
 NUMERICAL_INT = ../Numerical_integration
